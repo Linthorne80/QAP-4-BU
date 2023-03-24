@@ -1,6 +1,6 @@
 #list and data QAP 4
 #By: Brokelynn upshall
-# date: 2023/03/XX
+# date: 2023/03/24
 
 # One Stop Insurance Company
 #import
@@ -44,9 +44,17 @@ while True:
         else:
             break
 
-    PostCode = input("Enter the customer's postal code:                ").upper()
-    print()
-
+    while True:
+        postcode = input("Enter customer postal code (X9X9X9):        ").upper().replace("-", "").replace(" ", "")
+        if len(postcode) > 6:
+            print("ERROR: Postal code length exceeds maximum amount (6 characters)")
+        elif len(postcode) == 0:
+            print("ERROR: Nothing was entered")
+        elif postcode[0:5:2].isalpha() is False or postcode[1:6:2].isdigit() is False:
+            print("ERROR: Invalid postal code format (X9X9X9)")
+        else:
+            break
+            
     while True:
         CustPhNum = input("Enter the customer's phone number(9999999999):         ")
         if CustPhNum == "":
@@ -143,7 +151,7 @@ while True:
     print()
     print(f"    {CustFirstName:<10s} {CustLastName:<10s}             {CustPhNum:>10s}")
     print(f"    {CustStAdd:<15s}")
-    print(f"    {CustCity:<15s}, {Prov:2s} {PostCode}")
+    print(f"    {CustCity:<15s}, {Prov:2s} {postcode}")
     print("---------------------------------------------------------")
     print(f"Number of cars to be insured:                          {NumOfCar:>2d}")
     print("---------                                       ---------")
@@ -182,7 +190,7 @@ while True:
     f.write("{}, ".format(CustStAdd))
     f.write("{}, ".format(CustCity))
     f.write("{}, ".format(Prov))
-    f.write("{}, ".format(PostCode))
+    f.write("{}, ".format(postcode))
     f.write("{}, ".format(str(NumOfCar)))
     f.write("{}, ".format(str(Liability)))
     f.write("{}, ".format(str(Glass)))
